@@ -11,8 +11,8 @@
   <title>CODÍCIA — Còmic i exposició NFC</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="preload" href="assets/pages/04-codicia.webp" as="image" fetchpriority="high">
-  <link rel="stylesheet" href="styles.css">
-  <script src="script.js" defer></script>
+  <link rel="stylesheet" href="styles.css?v=2">
+  <script src="script.js?v=2" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#principal">Salta al contingut</a>
@@ -20,10 +20,10 @@
     <a class="wordmark" href="#inici" aria-label="Codícia, inici"><span class="sigil">✦</span> CODÍCIA</a>
     <nav class="desktop-nav" aria-label="Navegació principal">
       <a href="#cronologia">Cronologia</a>
-      <a href="#comic">Llegir el còmic</a>
+      <a href="#comic">Llegir com un llibre</a>
       <a href="#temari">Exposició NFC</a>
     </nav>
-    <a class="top-cta" href="#temari"><span class="dot"></span> Explorar els 6 NFC</a>
+    <a class="top-cta" href="#temari"><span class="dot"></span> Explorar el temari</a>
   </header>
 
   <main id="principal">
@@ -46,6 +46,28 @@
       </div>
     </section>
 
+    <section class="book-section" id="comic" aria-labelledby="book-title">
+      <div class="content-width">
+        <div class="section-top"><p class="overline">01 / LLEGIR EL CÒMIC</p><span class="section-flair">PASSA LES PÀGINES · 10 LÀMINES</span></div>
+        <div class="book-intro">
+          <div><h2 id="book-title">Obre <em>CODÍCIA.</em></h2><p>Com un llibre: dues pàgines a l'ordinador i una al mòbil. Avança amb les fletxes o llisca amb el dit. Segueix l'ordre original del relat.</p></div>
+          <span class="book-edition">EDICIÓ DIGITAL<br>VOL. 01 · 2026</span>
+        </div>
+        <div class="book-frame" aria-label="Lector del còmic en format llibre">
+          <div class="book-binding" aria-hidden="true"></div>
+          <div id="book-spread" class="book-spread" aria-live="polite" aria-atomic="true"></div>
+        </div>
+        <div class="book-navigation">
+          <button type="button" id="book-prev" class="book-turn" aria-label="Anar a la pàgina anterior"><span aria-hidden="true">←</span> Anterior</button>
+          <div class="book-position"><strong id="book-counter">01–02 / 10</strong><span id="book-chapter">Pròleg · El calze i el cavaller</span></div>
+          <button type="button" id="book-next" class="book-turn" aria-label="Passar a la pàgina següent">Següent <span aria-hidden="true">→</span></button>
+        </div>
+        <div class="book-progress" id="book-progress" aria-label="Progrés de lectura"></div>
+        <p class="book-instructions">Toca una il·lustració per ampliar-la · <span class="desktop-tip">També pots utilitzar les fletxes del teclat.</span> <span class="mobile-tip">Llisca lateralment per passar pàgina.</span></p>
+        <a class="book-to-gallery" href="#galeria">Consultar les làmines individualment <span aria-hidden="true">↗</span></a>
+      </div>
+    </section>
+
     <div class="marquee" aria-hidden="true"><span>OR · ARGENT · FERRO · PODER · FE · MEMÒRIA · GEMMES · ART ·</span><span>OR · ARGENT · FERRO · PODER · FE · MEMÒRIA · GEMMES · ART ·</span></div>
 
     <section class="intro-block content-width" id="guia">
@@ -55,7 +77,7 @@
       </div>
       <div class="intro-copy">
         <p>Les joies no són només materials valuosos: també parlen de religions, jerarquies, sentiments, tècniques i civilitzacions.</p>
-        <p><strong>Com funciona?</strong> Pots llegir les pàgines en ordre cronològic, seguir l'ordre original del còmic o acostar el mòbil als sis NFC de la làmina física per arribar directament a cada tema.</p>
+        <p><strong>Com funciona?</strong> Pots llegir les pàgines en ordre cronològic, seguir l'ordre original del còmic o acostar el mòbil a l’NFC del dossier per obrir aquesta exposició.</p>
         <div class="fiction-note"><span aria-hidden="true">✳</span><div><strong>Ficció històrica.</strong> Els escenaris i les èpoques s'inspiren en la història, però l'amulet maleït, el seu recorregut i la coronació del cavaller són elements inventats.</div></div>
       </div>
     </section>
@@ -76,10 +98,10 @@
       </div>
     </section>
 
-    <section class="reader-section content-width" id="comic" aria-labelledby="comic-title">
-      <div class="section-top"><p class="overline">02 / EL CÒMIC</p><span class="section-flair">10 LÀMINES IL·LUSTRADES</span></div>
+    <section class="reader-section content-width" id="galeria" aria-labelledby="comic-title">
+      <div class="section-top"><p class="overline">03 / GALERIA DE LÀMINES</p><span class="section-flair">10 LÀMINES IL·LUSTRADES</span></div>
       <div class="reader-head">
-        <div><h2 id="comic-title">Un relat, <em>dues lectures.</em></h2><p class="section-lead">Toca qualsevol pàgina per veure-la de prop. L'ordre cronològic està activat inicialment.</p></div>
+        <div><h2 id="comic-title">Les pàgines, <em>una a una.</em></h2><p class="section-lead">Toca qualsevol pàgina per veure-la de prop. L'ordre cronològic està activat inicialment.</p></div>
         <div class="order-controls" role="group" aria-label="Ordre de lectura">
           <button type="button" class="order-btn is-active" data-order="chronological" aria-pressed="true">Cronològic</button>
           <button type="button" class="order-btn" data-order="narrative" aria-pressed="false">Original del còmic</button>
@@ -92,8 +114,8 @@
 
     <section class="nfc-section" id="temari" aria-labelledby="temari-title">
       <div class="content-width">
-        <div class="section-top"><p class="overline">03 / LA LÀMINA INTERACTIVA</p><span class="section-flair">SIS ETIQUETES NFC · SIS CONCEPTES</span></div>
-        <div class="nfc-header"><h2 id="temari-title">El que hi ha <em>darrere de l'or.</em></h2><p>La part física resumeix el tema. Cada NFC obre un capítol ampliat amb definicions, exemples i una pàgina del còmic que ajuda a entendre'l.</p></div>
+        <div class="section-top"><p class="overline">04 / CONTINGUT DIDÀCTIC</p><span class="section-flair">SIS CONCEPTES · UN ACCÉS NFC</span></div>
+        <div class="nfc-header"><h2 id="temari-title">El que hi ha <em>darrere de l'or.</em></h2><p>La part física resumeix el tema. L’NFC del dossier obre aquesta web, on pots explorar sis capítols ampliats amb definicions, exemples i imatges del còmic.</p></div>
         <div class="nfc-index" aria-label="Índex d'apartats NFC">
           <a href="#orfebreria"><span>01</span> ORFEBRERIA <span aria-hidden="true">↗</span></a>
           <a href="#materials"><span>02</span> MATERIALS <span aria-hidden="true">↗</span></a>
@@ -105,7 +127,7 @@
 
         <article class="chapter" id="orfebreria">
           <div class="chapter-visual"><img src="assets/pages/04-codicia.webp" alt="Sacerdot que neteja un calze d'or en una església, exemple de l'orfebreria religiosa" width="1055" height="1491" loading="lazy"><span class="img-tape">OR / RELIGIÓ / PODER</span></div>
-          <div class="chapter-content"><p class="overline">NFC 01 / L'ART DELS METALLS PRECIOSOS</p><h3>Orfebreria<span class="chapter-dot">.</span></h3><p class="chapter-definition">L'orfebreria és l'art de treballar metalls preciosos, especialment <strong>l'or i l'argent</strong>, per crear objectes artístics, ornamentals o rituals.</p><p>Des de l'antiguitat ha representat riquesa, autoritat i espiritualitat. Una peça no és valuosa només pel metall: també ho és per <strong>la tècnica, la funció i el significat</strong>.</p>
+          <div class="chapter-content"><p class="overline">CAPÍTOL 01 / L'ART DELS METALLS PRECIOSOS</p><h3>Orfebreria<span class="chapter-dot">.</span></h3><p class="chapter-definition">L'orfebreria és l'art de treballar metalls preciosos, especialment <strong>l'or i l'argent</strong>, per crear objectes artístics, ornamentals o rituals.</p><p>Des de l'antiguitat ha representat riquesa, autoritat i espiritualitat. Una peça no és valuosa només pel metall: també ho és per <strong>la tècnica, la funció i el significat</strong>.</p>
             <div class="mini-split"><div><span class="mini-label">ÀMBIT CIVIL</span><strong>Prestigi i vida quotidiana</strong><p>Joies, vaixella i objectes domèstics o decoratius.</p></div><div><span class="mini-label">ÀMBIT RELIGIÓS</span><strong>Fe i cerimònia</strong><p>Calzes, custòdies, creus, reliquiaris i altars ornamentats.</p></div></div>
             <a class="chapter-related" href="#lamina-04">Veure el calze del còmic <span>↗</span></a>
           </div>
@@ -113,7 +135,7 @@
 
         <article class="chapter chapter-reverse" id="materials">
           <div class="chapter-visual"><img src="assets/pages/05-el-cavaller.webp" alt="Cavaller que decora amb or una armadura de ferro en una ferreria" width="1055" height="1491" loading="lazy"><span class="img-tape">MATÈRIA / VALOR / SÍMBOL</span></div>
-          <div class="chapter-content"><p class="overline">NFC 02 / LA MATÈRIA</p><h3>Materials<span class="chapter-dot">.</span></h3><p class="chapter-definition">Cada metall té propietats diferents. La seva elecció condiciona <strong>la forma, la durabilitat, el valor i el missatge</strong> d'una peça.</p>
+          <div class="chapter-content"><p class="overline">CAPÍTOL 02 / LA MATÈRIA</p><h3>Materials<span class="chapter-dot">.</span></h3><p class="chapter-definition">Cada metall té propietats diferents. La seva elecció condiciona <strong>la forma, la durabilitat, el valor i el missatge</strong> d'una peça.</p>
             <div class="material-list"><div><span class="material-symbol">Au</span><div><strong>Or</strong><p>Mal·leable, brillant i resistent a la corrosió. Associat al poder, al prestigi i a la divinitat.</p></div></div><div><span class="material-symbol">Ag</span><div><strong>Argent</strong><p>Metall lluminós i molt apte per al repussat i el cisellat. Present en objectes civils i litúrgics.</p></div></div><div><span class="material-symbol">Fe</span><div><strong>Ferro</strong><p>Més comú i funcional. La joieria en ferro també ha expressat identitat i canvi social.</p></div></div></div>
             <p class="takeaway"><strong>Al còmic:</strong> el cavaller transforma una armadura de ferro afegint-hi ornaments d'or. La decoració canvia la seva aparença i el que comunica.</p>
             <a class="chapter-related" href="#lamina-05">Veure la transformació de l'armadura <span>↗</span></a>
@@ -122,7 +144,7 @@
 
         <article class="chapter" id="tecniques">
           <div class="chapter-visual"><img src="assets/pages/05-el-cavaller.webp" alt="Treball artesanal del metall en l'armadura del cavaller" width="1055" height="1491" loading="lazy"><span class="img-tape">FORMA / RELLEU / ORNAMENT</span></div>
-          <div class="chapter-content"><p class="overline">NFC 03 / COM ES FABRICA UNA PEÇA</p><h3>Tècniques<span class="chapter-dot">.</span></h3><p class="chapter-definition">Una joia pot transformar-se <strong>modelant el metall</strong> o enriquint-lo amb <strong>ornamentació complementària</strong>.</p>
+          <div class="chapter-content"><p class="overline">CAPÍTOL 03 / COM ES FABRICA UNA PEÇA</p><h3>Tècniques<span class="chapter-dot">.</span></h3><p class="chapter-definition">Una joia pot transformar-se <strong>modelant el metall</strong> o enriquint-lo amb <strong>ornamentació complementària</strong>.</p>
             <div class="tech-group"><span class="mini-label">TREBALL DIRECTE DEL METALL</span>
               <details><summary>Gravat <span>Incisió</span></summary><p>Es dibuixen línies i motius a la superfície metàl·lica amb eines de tall o punxa.</p></details>
               <details><summary>Repussat <span>Relleu per darrere</span></summary><p>El metall es treballa pel revers fins a formar volums que sobresurten per l'anvers.</p></details>
@@ -141,7 +163,7 @@
 
         <article class="chapter chapter-reverse" id="joieria">
           <div class="chapter-visual"><img src="assets/pages/01-egipte.webp" alt="Faraó amb joies d'or, símbols de poder i ornaments personals" width="1055" height="1491" loading="lazy"><span class="img-tape">IDENTITAT / PRESTIGI / ORNAMENT</span></div>
-          <div class="chapter-content"><p class="overline">NFC 04 / L'OBJECTE PERSONAL</p><h3>Joieria<span class="chapter-dot">.</span></h3><p class="chapter-definition">La joieria és la branca de l'orfebreria dedicada a crear <strong>ornaments personals</strong>: anells, collars, arracades, braçalets i fermalls.</p><p>Des de les petxines de la prehistòria fins a l'alta joieria, els ornaments expliquen qui els porta i com la seva societat entén la bellesa.</p>
+          <div class="chapter-content"><p class="overline">CAPÍTOL 04 / L'OBJECTE PERSONAL</p><h3>Joieria<span class="chapter-dot">.</span></h3><p class="chapter-definition">La joieria és la branca de l'orfebreria dedicada a crear <strong>ornaments personals</strong>: anells, collars, arracades, braçalets i fermalls.</p><p>Des de les petxines de la prehistòria fins a l'alta joieria, els ornaments expliquen qui els porta i com la seva societat entén la bellesa.</p>
             <div class="mini-split triple"><div><span class="mini-label">ORNAMENTAL</span><strong>Embellir</strong><p>Transforma l'aparença del cos.</p></div><div><span class="mini-label">SOCIAL</span><strong>Distingir</strong><p>Comunica estatus o pertinença.</p></div><div><span class="mini-label">SIMBÒLICA</span><strong>Representar</strong><p>Expressa fe, identitat o compromís.</p></div></div>
             <a class="chapter-related" href="#lamina-01">Veure les joies del faraó <span>↗</span></a>
           </div>
@@ -149,7 +171,7 @@
 
         <article class="chapter" id="gemmologia">
           <div class="chapter-visual"><img src="assets/pages/02-la-malediccio.webp" alt="Amulet d'or amb gemmes vermelles, peça fictícia que serveix per explicar la gemmologia" width="1055" height="1491" loading="lazy"><span class="img-tape">COLOR / ORIGEN / AUTENTICITAT</span></div>
-          <div class="chapter-content"><p class="overline">NFC 05 / EL CONEIXEMENT DE LES GEMMES</p><h3>Gemmologia<span class="chapter-dot">.</span></h3><p class="chapter-definition">La gemmologia és la ciència que estudia les gemmes: <strong>l'origen, la composició, les propietats físiques i òptiques i l'autenticitat</strong>.</p><p>Ajuda a identificar materials, valorar-los i distingir gemmes naturals, sintètiques i imitacions.</p>
+          <div class="chapter-content"><p class="overline">CAPÍTOL 05 / EL CONEIXEMENT DE LES GEMMES</p><h3>Gemmologia<span class="chapter-dot">.</span></h3><p class="chapter-definition">La gemmologia és la ciència que estudia les gemmes: <strong>l'origen, la composició, les propietats físiques i òptiques i l'autenticitat</strong>.</p><p>Ajuda a identificar materials, valorar-los i distingir gemmes naturals, sintètiques i imitacions.</p>
             <div class="gem-grid">
               <div class="gem"><span class="gem-stone emerald"></span><strong>Maragda</strong><small>Varietat verda del beril. Associada a la renovació.</small></div>
               <div class="gem"><span class="gem-stone ruby"></span><strong>Rubí</strong><small>Corindó vermell. Símbol històric de poder i passió.</small></div>
@@ -165,7 +187,7 @@
 
         <article class="chapter chapter-reverse" id="evolucio">
           <div class="chapter-visual"><img src="assets/pages/08-el-tresor.webp" alt="Taula amb joies històriques des de la prehistòria fins al Renaixement" width="768" height="1024" loading="lazy"><span class="img-tape">TRADICIÓ / ART / CANVI</span></div>
-          <div class="chapter-content"><p class="overline">NFC 06 / UNA NOVA MIRADA</p><h3>Joieria artística<br><span class="thin-amp">i</span> bijuteria<span class="chapter-dot">.</span></h3><p class="chapter-definition">A finals del segle XIX i principis del XX, el valor d'una joia deixa de dependre únicament de la quantitat de materials preciosos.</p>
+          <div class="chapter-content"><p class="overline">CAPÍTOL 06 / UNA NOVA MIRADA</p><h3>Joieria artística<br><span class="thin-amp">i</span> bijuteria<span class="chapter-dot">.</span></h3><p class="chapter-definition">A finals del segle XIX i principis del XX, el valor d'una joia deixa de dependre únicament de la quantitat de materials preciosos.</p>
             <div class="mini-split"><div><span class="mini-label">JOIERIA ARTÍSTICA</span><strong>La joia com a obra d'art</strong><p>Peces singulars amb valor creatiu, expressiu i simbòlic. <strong>René Lalique</strong>, vinculat a l'Art Nouveau, n'és un referent.</p></div><div><span class="mini-label">BIJUTERIA</span><strong>L'ornament accessible</strong><p>Utilitza materials habitualment no preciosos i producció més extensa, vinculada a la moda i al consum.</p></div></div>
             <p class="takeaway">La taula del còmic arriba fins al Renaixement. Aquest capítol continua la història fins a la transformació de la joieria dels segles XIX i XX.</p>
             <a class="chapter-related" href="#lamina-08">Veure la col·lecció històrica <span>↗</span></a>

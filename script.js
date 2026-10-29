@@ -17,6 +17,7 @@ const orderButtons=[...document.querySelectorAll('[data-order]')];
 let displayOrder='chronological';
 let orderedPages=[];
 let currentIndex=0;
+let dialogPages=[];
 const dialog=document.getElementById('page-dialog');
 const dialogImg=document.getElementById('dialog-image');
 const dialogCounter=document.getElementById('dialog-counter');
@@ -38,15 +39,106 @@ function renderPages(order){
   orderButtons.forEach(btn=>{const active=btn.dataset.order===order;btn.classList.toggle('is-active',active);btn.setAttribute('aria-pressed',String(active));});
   document.getElementById('order-explanation').textContent=order==='chronological'?'Antic Egipte → Roma → 1527 → 1530 → museu':'Pròleg al 1527 → retorn a Egipte → Roma → desenllaç';
 }
-function openPage(index){currentIndex=(index+orderedPages.length)%orderedPages.length;updateDialog();if(!dialog.open)dialog.showModal();}
-function updateDialog(){const p=orderedPages[currentIndex];dialogImg.src='assets/pages/'+p.src;dialogImg.alt=p.title+'. '+p.description;dialogCounter.textContent=`LÀMINA ${String(currentIndex+1).padStart(2,'0')} / ${orderedPages.length}`;dialogTitle.textContent=p.title;dialogDesc.textContent=p.period+' — '+p.description;}
+function openPage(index, sequence=orderedPages){dialogPages=sequence;currentIndex=(index+dialogPages.length)%dialogPages.length;updateDialog();if(!dialog.open)dialog.showModal();}
+function updateDialog(){const p=dialogPages[currentIndex];dialogImg.src='assets/pages/'+p.src;dialogImg.alt=p.title+'. '+p.description;dialogCounter.textContent=`LÀMINA ${String(currentIndex+1).padStart(2,'0')} / ${dialogPages.length}`;dialogTitle.textContent=p.title;dialogDesc.textContent=p.period+' — '+p.description;}
 orderButtons.forEach(b=>b.addEventListener('click',()=>{const hash=location.hash;renderPages(b.dataset.order);if(hash.startsWith('#lamina-'))document.getElementById(hash.slice(1))?.scrollIntoView({block:'start'});}));
 document.getElementById('dialog-close').addEventListener('click',()=>dialog.close());
-document.getElementById('dialog-prev').addEventListener('click',()=>openPage(currentIndex-1));
-document.getElementById('dialog-next').addEventListener('click',()=>openPage(currentIndex+1));
+document.getElementById('dialog-prev').addEventListener('click',()=>openPage(currentIndex-1,dialogPages));
+document.getElementById('dialog-next').addEventListener('click',()=>openPage(currentIndex+1,dialogPages));
 dialog.addEventListener('click',e=>{if(e.target===dialog)dialog.close();});
-document.addEventListener('keydown',e=>{if(!dialog.open)return;if(e.key==='ArrowRight'){e.preventDefault();openPage(currentIndex+1);}else if(e.key==='ArrowLeft'){e.preventDefault();openPage(currentIndex-1);}});
+document.addEventListener('keydown',e=>{if(!dialog.open)return;if(e.key==='ArrowRight'){e.preventDefault();openPage(currentIndex+1,dialogPages);}else if(e.key==='ArrowLeft'){e.preventDefault();openPage(currentIndex-1,dialogPages);}});
 renderPages('chronological');
 // Quan un enllaç apunta a una làmina generada amb JS, cal fer-hi scroll després de crear-la.
 function scrollToInitialAnchor(){const id=decodeURIComponent(location.hash.slice(1));if(!id)return;const el=document.getElementById(id);if(el)requestAnimationFrame(()=>el.scrollIntoView({block:'start',behavior:'instant'}));}
 window.addEventListener('load',scrollToInitialAnchor);
+
+
+// Lector horitzontal: pàgines seguint l'ordre narratiu original.
+const bookPages = [...pages].sort((a,b)=>a.narrative-b.narrative);
+const bookRoot = document.getElementById('book-spread');
+const bookCounter = document.getElementById('book-counter');
+const bookChapter = document.getElementById('book-chapter');
+const bookProgress = document.getElementById('book-progress');
+const bookPrevious = document.getElementById('book-prev');
+const bookNext = document.getElementById('book-next');
+const compactBook = window.matchMedia('(max-width: 700px)');
+let bookIndex = 0;
+const bookStep = () => compactBook.matches ? 1 : 2;
+
+function renderBook() {
+  const step=bookStep();
+  bookIndex=Math.max(0,Math.min(bookIndex,bookPages.length-1));
+  if(step===2)bookIndex=Math.floor(bookIndex/2)*2;
+  const shown=bookPages.slice(bookIndex,bookIndex+step);
+  bookRoot.replaceChildren();
+  bookRoot.classList.toggle('single-page',step===1);
+  shown.forEach((page,idx)=>{
+    const leaf=document.createElement('button');
+    leaf.type='button';
+    leaf.className='book-leaf';
+    leaf.setAttribute('aria-label',`Ampliar pàgina ${bookIndex+idx+1}: ${page.title}`);
+    leaf.title='Ampliar la il·lustració';
+    const img=document.createElement('img');
+    img.src='assets/pages/'+page.src;
+    img.alt=page.title+' — '+page.description;
+    img.decoding='async';
+    img.loading='eager';
+    const folio=document.createElement('span');
+    folio.className='book-folio';
+    folio.textContent=String(bookIndex+idx+1).padStart(2,'0');
+    leaf.append(img,folio);
+    leaf.addEventListener('click',()=>openPage(bookIndex+idx,bookPages));
+    bookRoot.append(leaf);
+  });
+  const first=String(bookIndex+1).padStart(2,'0');
+  const last=String(bookIndex+shown.length).padStart(2,'0');
+  bookCounter.textContent=`${step===1?first:first+'–'+last} / ${bookPages.length}`;
+  bookChapter.textContent=shown.map(p=>p.title).join(' · ');
+  bookPrevious.disabled=bookIndex===0;
+  bookNext.disabled=bookIndex+step>=bookPages.length;
+  bookProgress.replaceChildren();
+  const spreadCount=Math.ceil(bookPages.length/step);
+  for(let s=0;s<spreadCount;s++){
+    const dot=document.createElement('button');
+    dot.type='button';
+    dot.setAttribute('aria-label',`Anar a ${step===1?'la pàgina':'les pàgines'} ${s*step+1}${step===2?' i '+Math.min(s*step+2,bookPages.length):''}`);
+    const active=Math.floor(bookIndex/step)===s;
+    dot.className='book-progress-segment'+(active?' is-current':'');
+    if(active)dot.setAttribute('aria-current','step');
+    dot.addEventListener('click',()=>{bookIndex=s*step;renderBook();});
+    bookProgress.append(dot);
+  }
+}
+function turnBook(delta) {
+  bookIndex += delta*bookStep();
+  renderBook();
+}
+bookPrevious.addEventListener('click',()=>turnBook(-1));
+bookNext.addEventListener('click',()=>turnBook(1));
+compactBook.addEventListener('change',renderBook);
+const bookSection=document.getElementById('comic');
+bookSection.addEventListener('keydown',e=>{
+  if(dialog.open||!bookSection.contains(document.activeElement))return;
+  if(e.key==='ArrowRight'&&!bookNext.disabled){e.preventDefault();turnBook(1);}
+  if(e.key==='ArrowLeft'&&!bookPrevious.disabled){e.preventDefault();turnBook(-1);}
+});
+let touchX=0,touchY=0;
+bookRoot.addEventListener('touchstart',e=>{
+  if(e.touches.length!==1)return;
+  touchX=e.touches[0].clientX;
+  touchY=e.touches[0].clientY;
+},{passive:true});
+bookRoot.addEventListener('touchend',e=>{
+  if(e.changedTouches.length!==1)return;
+  const deltaX=e.changedTouches[0].clientX-touchX;
+  const deltaY=e.changedTouches[0].clientY-touchY;
+  if(Math.abs(deltaX)>55&&Math.abs(deltaX)>Math.abs(deltaY)*1.3){
+    if(deltaX<0&&!bookNext.disabled)turnBook(1);
+    if(deltaX>0&&!bookPrevious.disabled)turnBook(-1);
+    // Evita que un toc de lliscament obri també la imatge.
+    swipeUntil=Date.now()+350;
+  }
+},{passive:true});
+let swipeUntil=0;
+bookRoot.addEventListener('click',e=>{if(Date.now()<swipeUntil)e.stopPropagation();},true);
+renderBook();
